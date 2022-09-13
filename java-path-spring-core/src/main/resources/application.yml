@@ -1,0 +1,5 @@
+sample:
+    value: "Hello"
+spring:
+    profiles:
+        active: test
