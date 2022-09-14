@@ -1,5 +1,15 @@
-sample:
-    value: "Hello"
 spring:
-    profiles:
-        active: test
+    config:
+        activate:
+            on-profile: development
+myproperties:
+    threadPool: 50
+    email: something@development.site
+---
+spring:
+    config:
+        activate:
+            on-profile: production
+myproperties:
+    threadPool: 1000
+    email: something@production.site

@@ -5,12 +5,12 @@ import gr.codelearn.spring.showcase.core.domain.User;
 import gr.codelearn.spring.showcase.core.repository.DataRepository;
 import gr.codelearn.spring.showcase.core.repository.UserRespository;
 import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
 
-@Component
+@Repository
 @Primary
 public class UserRepositoryImplSQLWithConnectionPooling extends BaseComponent
 		implements UserRespository, DataRepository {

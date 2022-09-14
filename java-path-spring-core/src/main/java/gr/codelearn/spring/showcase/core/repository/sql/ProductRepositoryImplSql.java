@@ -7,12 +7,12 @@ import gr.codelearn.spring.showcase.core.repository.ProductRepository;
 import gr.codelearn.spring.showcase.core.repository.pooling.ProductRepositoryImplSQLWithConnectionPooling;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
 
-@Component
+@Repository
 @Qualifier("sql")
 @ConditionalOnMissingBean(ProductRepositoryImplSQLWithConnectionPooling.class)
 public class ProductRepositoryImplSql extends BaseComponent implements ProductRepository, DataRepository {
