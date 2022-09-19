@@ -5,6 +5,9 @@ spring:
 myproperties:
     threadPool: 50
     email: something@development.site
+    servers:
+        - www.abc.dev.com
+        - www.xyz.dev.com
 ---
 spring:
     config:
@@ -13,3 +16,6 @@ spring:
 myproperties:
     threadPool: 1000
     email: something@production.site
+    servers:
+        - www.abc.com
+        - www.xyz.com
