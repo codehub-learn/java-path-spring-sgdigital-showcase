@@ -27,40 +27,6 @@
 				</Delete>
 			</DefaultRolloverStrategy>
 		</RollingRandomAccessFile>
-
-		<!-- Rolling Random Access File Appender with a default buffer of 256 * 1024 bytes -->
-		<RollingRandomAccessFile name="DataAppender"
-								 fileName="logs/java-path-spring-data.log"
-								 filePattern="logs/java-path-spring-data-%d{yyyy-MM-dd}.zip">
-			<PatternLayout>
-				<Pattern>${LOG_PATTERN}</Pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy/>
-			</Policies>
-			<DefaultRolloverStrategy>
-				<Delete basePath="logs">
-					<IfLastModified age="30d"/>
-				</Delete>
-			</DefaultRolloverStrategy>
-		</RollingRandomAccessFile>
-
-		<!-- Rolling Random Access File Appender with a default buffer of 256 * 1024 bytes -->
-		<RollingRandomAccessFile name="SqlAppender"
-								 fileName="logs/java-path-spring-data-sql.log"
-								 filePattern="logs/java-path-spring-data-sql-%d{yyyy-MM-dd}.zip">
-			<PatternLayout>
-				<Pattern>${LOG_PATTERN}</Pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy/>
-			</Policies>
-			<DefaultRolloverStrategy>
-				<Delete basePath="logs">
-					<IfLastModified age="30d"/>
-				</Delete>
-			</DefaultRolloverStrategy>
-		</RollingRandomAccessFile>
 	</Appenders>
 
 	<Loggers>
@@ -68,39 +34,15 @@
 			<AppenderRef ref="ConsoleAppender"/>
 			<AppenderRef ref="DefaultAppender"/>
 		</AsyncLogger>
+		<AsyncLogger name="org.springframework.web" level="debug" additivity="false">
+			<AppenderRef ref="ConsoleAppender"/>
+			<AppenderRef ref="DefaultAppender"/>
+		</AsyncLogger>
 		<AsyncLogger name="org.springframework" level="info" additivity="false">
 			<AppenderRef ref="ConsoleAppender"/>
 			<AppenderRef ref="DefaultAppender"/>
 		</AsyncLogger>
-		<AsyncLogger name="org.springframework.data" level="info" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="DataAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="com.zaxxer.hikari" level="debug" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="DataAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="org.hibernate.engine" level="warn" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="DataAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="org.hibernate.stat" level="info" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="DataAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="org.hibernate.SQL" level="trace" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="SqlAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="SqlAppender"/>
-		</AsyncLogger>
-		<AsyncLogger name="org.hibernate.SQL_SLOW" level="trace" additivity="false">
-			<AppenderRef ref="ConsoleAppender"/>
-			<AppenderRef ref="DataAppender"/>
-			<AppenderRef ref="SqlAppender"/>
-		</AsyncLogger>
+
 		<Root level="info">
 			<AppenderRef ref="ConsoleAppender"/>
 			<AppenderRef ref="DefaultAppender"/>
