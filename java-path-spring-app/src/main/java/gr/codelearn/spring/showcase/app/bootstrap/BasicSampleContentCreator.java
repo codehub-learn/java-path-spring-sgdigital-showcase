@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Component
-@Profile("generate-basic-content")
+@Profile("generate-catalog-customers")
 @RequiredArgsConstructor
 public class BasicSampleContentCreator extends BaseComponent implements CommandLineRunner {
 	private final ProductService productService;

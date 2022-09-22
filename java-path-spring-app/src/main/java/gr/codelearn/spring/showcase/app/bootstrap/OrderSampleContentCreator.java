@@ -36,7 +36,6 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
 		orderService.addItem(firstOrder, productService.findBySerial("SN1000-0001"), 2);
 		orderService.addItem(firstOrder, productService.findBySerial("SN1100-0001"), 1);
 		orderService.addItem(firstOrder, productService.findBySerial("SN1000-0004"), 1);
-		orderService.addItem(firstOrder, productService.findBySerial("SN1000-0008"), 1);
 		// Update item(s)
 		orderService.addItem(firstOrder, productService.findBySerial("SN1000-0001"), 1);
 		orderService.updateItem(firstOrder, productService.findBySerial("SN1000-0004"), 2);
@@ -54,7 +53,6 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
 		orderService.addItem(secondOrder, productService.findBySerial("SN1000-0002"), 1);
 		orderService.addItem(secondOrder, productService.findBySerial("SN1200-0001"), 1);
 		orderService.addItem(secondOrder, productService.findBySerial("SN1200-0001"), 1);
-		orderService.addItem(secondOrder, productService.findBySerial("SN1299-0001"), 1);
 		// Checkout 2nd order
 		orderService.checkout(secondOrder, PaymentMethod.WIRE_TRANSFER);
 

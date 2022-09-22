@@ -1,10 +1,8 @@
 package gr.codelearn.spring.showcase.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -15,8 +13,6 @@ import java.math.BigDecimal;
 @Setter
 @ToString(callSuper = true)
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderItem extends BaseModel {
 	@NotNull
 	private Product product;

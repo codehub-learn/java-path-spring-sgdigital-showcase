@@ -1,9 +1,7 @@
 package gr.codelearn.spring.showcase.app.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,8 +12,6 @@ import java.math.BigDecimal;
 @Setter
 @ToString(callSuper = true)
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product extends BaseModel {
 	@NotNull
 	private String serial;
