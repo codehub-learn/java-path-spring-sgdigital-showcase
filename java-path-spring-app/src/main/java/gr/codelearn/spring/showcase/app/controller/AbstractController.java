@@ -1,9 +1,11 @@
 package gr.codelearn.spring.showcase.app.controller;
 
 import gr.codelearn.spring.showcase.app.base.BaseComponent;
+import gr.codelearn.spring.showcase.app.base.BaseMapper;
 import gr.codelearn.spring.showcase.app.domain.BaseModel;
 import gr.codelearn.spring.showcase.app.service.BaseService;
 import gr.codelearn.spring.showcase.app.transfer.ApiResponse;
+import gr.codelearn.spring.showcase.app.transfer.resource.BaseResource;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,29 +22,41 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractController<T extends BaseModel> extends BaseComponent {
+public abstract class AbstractController<T extends BaseModel, R extends BaseResource> extends BaseComponent {
 	protected abstract BaseService<T, Long> getBaseService();
 
+	protected abstract BaseMapper<T, R> getMapper();
+
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<T>> get(@PathVariable("id") final Long id) {
-		return ResponseEntity.ok(ApiResponse.<T>builder().data(getBaseService().get(id)).build());
+	public ResponseEntity<ApiResponse<R>> get(@PathVariable("id") final Long id) {
+		return ResponseEntity.ok(
+				ApiResponse.<R>builder().data(getMapper().toResource(getBaseService().get(id))).build());
 	}
 
 	@GetMapping
-	public ResponseEntity<ApiResponse<List<T>>> findAll() {
-		return ResponseEntity.ok(ApiResponse.<List<T>>builder().data(getBaseService().findAll()).build());
+	public ResponseEntity<ApiResponse<List<R>>> findAll() {
+		return ResponseEntity.ok(
+				ApiResponse.<List<R>>builder().data(getMapper().toResources(getBaseService().findAll())).build());
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<T>> create(@Valid @RequestBody final T entity) {
-		return new ResponseEntity<>(ApiResponse.<T>builder().data(getBaseService().create(entity)).build(),
-									getNoCacheHeaders(), HttpStatus.CREATED);
+	public ResponseEntity<ApiResponse<R>> create(@Valid @RequestBody final R resource) {
+		//@formatter:off
+		return new ResponseEntity<>(
+				ApiResponse.<R>builder().data(
+						getMapper().toResource(
+												getBaseService().create(getMapper().toDomain(resource))
+											  )
+						).build(),
+				getNoCacheHeaders(),
+				HttpStatus.CREATED);
+		//@formatter:on
 	}
 
 	@PutMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@Valid @RequestBody final T entity) {
-		getBaseService().update(entity);
+	public void update(@Valid @RequestBody final R resource) {
+		getBaseService().update(getMapper().toDomain(resource));
 	}
 
 	@DeleteMapping("/{id}")
@@ -53,9 +67,9 @@ public abstract class AbstractController<T extends BaseModel> extends BaseCompon
 
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@Valid @RequestBody final T entity) {
-		if (getBaseService().exists(entity)) {
-			getBaseService().delete(entity);
+	public void delete(@Valid @RequestBody final R resource) {
+		if (getBaseService().exists(getMapper().toDomain(resource))) {
+			getBaseService().delete(getMapper().toDomain(resource));
 		}
 	}
 
