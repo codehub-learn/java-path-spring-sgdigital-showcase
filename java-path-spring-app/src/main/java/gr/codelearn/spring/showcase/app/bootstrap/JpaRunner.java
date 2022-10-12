@@ -80,5 +80,8 @@ public class JpaRunner extends BaseComponent implements CommandLineRunner {
 
 		final List<KeyValue<String, BigDecimal>> averageOrderCostPerCustomer = orderService.findAverageOrderCostPerCustomer();
 		averageOrderCostPerCustomer.forEach(result -> logger.info("{}", result));
+
+		final List<KeyValue<String, Long>> customersPurchasedMostExpensiveProduct = customerService.findCustomersPurchasedMostExpensiveProduct();
+		customersPurchasedMostExpensiveProduct.forEach(result -> logger.info("{}", result));
 	}
 }

@@ -1,5 +1,6 @@
 package gr.codelearn.spring.showcase.app.domain;
 
+import gr.codelearn.spring.showcase.app.transfer.KeyValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,18 +8,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//@formatter:off
+@NamedNativeQuery(name = "Customer.purchasedMostExpensiveProduct",
+		query =
+				"SELECT C.FIRSTNAME || ' ' || C.LASTNAME as fullname, COUNT(*) as purchases " +
+						"FROM ORDERS O, ORDER_ITEMS OI, CUSTOMERS C " +
+						"WHERE OI.ORDER_ID = O.ID " +
+						"AND O.CUSTOMER_ID = C.ID " +
+						"AND OI.PRODUCT_ID = (SELECT TOP 1 ID FROM PRODUCTS ORDER BY PRICE DESC) " +
+						"GROUP BY O.CUSTOMER_ID " +
+						"ORDER BY purchases, c.lastname, c.firstname",
+		resultSetMapping = "CustomersPurchasedMostExpensiveProduct")
+@SqlResultSetMapping(name = "CustomersPurchasedMostExpensiveProduct",
+		classes = @ConstructorResult(
+				targetClass = KeyValue.class,
+				columns = {
+						@ColumnResult(name = "fullname", type = String.class),
+						@ColumnResult(name = "purchases", type = Long.class)
+				}
+		)
+)
+//@formatter:on
 @Getter
 @Setter
 @ToString(callSuper = true)
