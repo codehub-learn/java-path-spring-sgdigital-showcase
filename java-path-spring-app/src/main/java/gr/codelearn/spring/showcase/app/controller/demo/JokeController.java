@@ -1,6 +1,6 @@
-package gr.codelearn.spring.showcase.app.controller;
+package gr.codelearn.spring.showcase.app.controller.demo;
 
-import gr.codelearn.spring.showcase.app.service.JokeService;
+import gr.codelearn.spring.showcase.app.service.demo.JokeService;
 import gr.codelearn.spring.showcase.app.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package gr.codelearn.spring.showcase.app.service;
+package gr.codelearn.spring.showcase.app.service.demo;
 
-import gr.codelearn.spring.showcase.app.repository.JokeRepository;
+import gr.codelearn.spring.showcase.app.repository.demo.JokeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

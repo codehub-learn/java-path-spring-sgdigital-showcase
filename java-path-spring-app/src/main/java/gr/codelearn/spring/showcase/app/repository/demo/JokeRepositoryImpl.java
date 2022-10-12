@@ -1,4 +1,4 @@
-package gr.codelearn.spring.showcase.app.repository;
+package gr.codelearn.spring.showcase.app.repository.demo;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
