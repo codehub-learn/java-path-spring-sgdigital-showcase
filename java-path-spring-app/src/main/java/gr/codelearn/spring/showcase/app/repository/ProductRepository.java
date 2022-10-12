@@ -1,9 +1,12 @@
 package gr.codelearn.spring.showcase.app.repository;
 
 import gr.codelearn.spring.showcase.app.domain.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface ProductRepository extends BaseRepository<Product, Long> {
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
 	Optional<Product> findBySerial(final String serial);
 }

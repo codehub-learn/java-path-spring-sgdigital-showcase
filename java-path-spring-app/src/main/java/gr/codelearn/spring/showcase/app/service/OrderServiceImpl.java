@@ -5,14 +5,16 @@ import gr.codelearn.spring.showcase.app.domain.Order;
 import gr.codelearn.spring.showcase.app.domain.OrderItem;
 import gr.codelearn.spring.showcase.app.domain.PaymentMethod;
 import gr.codelearn.spring.showcase.app.domain.Product;
-import gr.codelearn.spring.showcase.app.repository.BaseRepository;
 import gr.codelearn.spring.showcase.app.repository.OrderRepository;
+import gr.codelearn.spring.showcase.app.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 	private final OrderRepository orderRepository;
 
 	@Override
-	public BaseRepository<Order, Long> getRepository() {
+	public JpaRepository<Order, Long> getRepository() {
 		return orderRepository;
 	}
 
@@ -90,6 +92,17 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 		return create(order);
 	}
 
+	@Override
+	public Order getLazy(final Long id) {
+		final Order lazy = orderRepository.getLazy(id);
+		return lazy;
+	}
+
+	@Override
+	public List<KeyValue<String, BigDecimal>> findAverageOrderCostPerCustomer() {
+		return orderRepository.findAverageOrderCostPerCustomer();
+	}
+
 	private boolean checkNullability(Order order, Product product) {
 		if (order == null) {
 			logger.warn("Order is null.");
@@ -128,5 +141,20 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 					 totalDiscount, finalCost);
 
 		return finalCost;
+	}
+
+	@Override
+	public Order get(final Long id) {
+		Order order = getRepository().getReferenceById(id);
+		logger.trace("Item found matching id:{}.", id);
+		return order;
+	}
+
+	@Override
+	public List<Order> findAll() {
+		List<Order> ordersFound = getRepository().findAll();
+		ordersFound.forEach(order -> order.setOrderItems(null));
+		logger.trace("Returned {} items.", ordersFound.size());
+		return ordersFound;
 	}
 }

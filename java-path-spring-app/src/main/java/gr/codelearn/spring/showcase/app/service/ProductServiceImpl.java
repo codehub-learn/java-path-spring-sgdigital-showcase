@@ -1,9 +1,9 @@
 package gr.codelearn.spring.showcase.app.service;
 
 import gr.codelearn.spring.showcase.app.domain.Product;
-import gr.codelearn.spring.showcase.app.repository.BaseRepository;
 import gr.codelearn.spring.showcase.app.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +12,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 	private final ProductRepository productRepository;
 
 	@Override
-	public BaseRepository<Product, Long> getRepository() {
+	public JpaRepository<Product, Long> getRepository() {
 		return productRepository;
 	}
 

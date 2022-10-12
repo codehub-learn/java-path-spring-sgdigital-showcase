@@ -36,7 +36,7 @@ public class OrderController extends AbstractController<Order, OrderResource> {
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<OrderResource>> get(@PathVariable("id") final Long id) {
 		return ResponseEntity.ok(
-				ApiResponse.<OrderResource>builder().data(getMapper().toResource(orderService.get(id))).build());
+				ApiResponse.<OrderResource>builder().data(getMapper().toResource(orderService.getLazy(id))).build());
 	}
 
 	@GetMapping

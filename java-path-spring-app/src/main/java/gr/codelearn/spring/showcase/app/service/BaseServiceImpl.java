@@ -2,18 +2,22 @@ package gr.codelearn.spring.showcase.app.service;
 
 import gr.codelearn.spring.showcase.app.base.BaseComponent;
 import gr.codelearn.spring.showcase.app.domain.BaseModel;
-import gr.codelearn.spring.showcase.app.repository.BaseRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T, Long> {
-	public abstract BaseRepository<T, Long> getRepository();
+	public abstract JpaRepository<T, Long> getRepository();
 
 	@Override
 	public T create(final T item) {
-		T savedItem = getRepository().create(item);
+		T savedItem = getRepository().save(item);
 		logger.debug("Created item with id:{}.", savedItem.getId());
 		return savedItem;
 	}
@@ -34,7 +38,7 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
 	@Override
 	public void update(final T item) {
-		getRepository().update(item);
+		getRepository().save(item);
 	}
 
 	@Override
@@ -49,19 +53,21 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
 	@Override
 	public boolean exists(final T item) {
-		boolean exists = getRepository().exists(item);
+		boolean exists = getRepository().existsById(item.getId());
 		logger.trace("Item {}.", exists ? "exists" : "does not exist");
 		return exists;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public T get(final Long id) {
-		T item = getRepository().get(id);
+		T item = getRepository().getReferenceById(id);
 		logger.trace("Item found matching id:{}.", id);
 		return item;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<T> findAll() {
 		List<T> itemsFound = getRepository().findAll();
 		logger.trace("Returned {} items.", itemsFound.size());
