@@ -24,7 +24,7 @@ import java.util.Set;
 @SequenceGenerator(name = "idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1)
 public class Order extends BaseModel {
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Customer customer;
 
 	@Column(nullable = false)
@@ -32,8 +32,8 @@ public class Order extends BaseModel {
 
 	@ToString.Exclude
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<@NotNull OrderItem> orderItems;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private Set<OrderItem> orderItems;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
