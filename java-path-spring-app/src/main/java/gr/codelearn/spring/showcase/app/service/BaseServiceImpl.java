@@ -61,7 +61,7 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 	@Override
 	@Transactional(readOnly = true)
 	public T get(final Long id) {
-		T item = getRepository().getReferenceById(id);
+		T item = getRepository().findById(id).orElseThrow();
 		logger.trace("Item found matching id:{}.", id);
 		return item;
 	}
