@@ -7,6 +7,7 @@ import gr.codelearn.spring.showcase.app.domain.PaymentMethod;
 import gr.codelearn.spring.showcase.app.domain.Product;
 import gr.codelearn.spring.showcase.app.repository.OrderRepository;
 import gr.codelearn.spring.showcase.app.transfer.KeyValue;
+import gr.codelearn.spring.showcase.app.transfer.PurchasesCostPerCustomerCategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -156,5 +157,9 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 		ordersFound.forEach(order -> order.setOrderItems(null));
 		logger.trace("Returned {} items.", ordersFound.size());
 		return ordersFound;
+	}
+
+	public List<PurchasesCostPerCustomerCategoryDto> findTotalNumberOfOrdersAndCostOfPurchasesPerCustomerCategory() {
+		return orderRepository.findTotalNumberOfOrdersAndCostOfPurchasesPerCustomerCategory();
 	}
 }
