@@ -6,11 +6,13 @@ import gr.codelearn.spring.showcase.app.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements CustomerService {
 	private final CustomerRepository customerRepository;
 

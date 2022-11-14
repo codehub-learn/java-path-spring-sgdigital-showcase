@@ -86,6 +86,10 @@
 			<AppenderRef ref="ConsoleAppender"/>
 			<AppenderRef ref="SqlAppender"/>
 		</AsyncLogger>
+		<AsyncLogger name="org.springframework.cache" level="trace" additivity="false">
+			<AppenderRef ref="ConsoleAppender"/>
+			<AppenderRef ref="DataAppender"/>
+		</AsyncLogger>
 
 		<Root level="info">
 			<AppenderRef ref="ConsoleAppender"/>

@@ -61,3 +61,10 @@ spring:
             # .sql) and DML (data.sql) scripts.
             mode: never
             platform: h2
+    task:
+        scheduling:
+            pool:
+                size: 2
+            thread-name-prefix: scheduler-
+    cache:
+        cache-names: categories, category, products, product
